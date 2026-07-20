@@ -1,0 +1,53 @@
+.empty-chat{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px;
+}
+
+.empty-chat-content{
+    max-width:520px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;   /* Sab kuch center */
+}
+
+.empty-icon{
+    font-size:70px;
+    margin-bottom:20px;
+}
+
+.empty-chat h2{
+    color:white;
+    font-size:38px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.empty-chat p{
+    color:#b3b3b3;
+    font-size:17px;
+    line-height:1.7;
+    margin-bottom:30px;
+}
+
+.upload-btn{
+    background:#000905;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:14px 28px;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.upload-btn:hover{
+    background:#0a0b0b;
+    transform:translateY(-2px);
+}

@@ -1,0 +1,48 @@
+import {Navigate } from "react-router-dom";
+import { useState,useEffect } from "react";
+import axios from "axios";
+
+function ProtectedRoute({children}){
+    const[loading,setLoading]=useState(true);
+    const [isValid,setIsValid]=useState(false);
+    useEffect(() => {
+        async function verifyToken(){
+            const token= localStorage.getItem("token");
+            if (!token){
+                setLoading(false);
+                return;
+            }
+            try{
+                await axios.get("http://127.0.0.1:8000/me",
+                    {
+                        headers:{
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+                setIsValid(true);
+            }
+            catch{
+                localStorage.removeItem("token");
+                setIsValid(false);          
+             }
+             finally{
+                setLoading(false);
+
+             }
+        }
+        
+            verifyToken();
+        },[]);
+
+        if (loading){
+            return <h2>Loading...</h2>
+        }
+        if (!isValid){
+            return <Navigate to ="/"  />
+
+        }
+        return children;
+
+    }
+export default ProtectedRoute;

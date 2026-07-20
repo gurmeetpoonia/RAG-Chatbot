@@ -1,0 +1,200 @@
+/* ===========================
+   Modal UI Windows
+=========================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000; /* Sidebar dropdown se upar rakhne ke liye */
+}
+.modal-box{
+
+max-height:80vh;
+
+overflow-y:auto;
+
+}
+
+.modal-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:15px;
+
+}
+
+.close-modal-btn{
+
+background:none;
+
+border:none;
+
+color:white;
+
+font-size:24px;
+
+cursor:pointer;
+
+}
+
+.close-modal-btn:hover{
+
+color:red;
+
+}
+
+.attached-item{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:8px;
+
+margin:8px 0;
+
+background:#40414f;
+
+border-radius:8px;
+
+}
+
+.remove-btn{
+
+background:#ef4444;
+
+color:white;
+
+border:none;
+
+padding:6px 12px;
+
+border-radius:6px;
+
+cursor:pointer;
+
+}
+
+.remove-btn:hover{
+
+background:#dc2626;
+
+}
+
+.modal-footer{
+
+display:flex;
+
+justify-content:flex-end;
+
+gap:10px;
+
+margin-top:20px;
+
+}
+
+.cancel-btn{
+
+background:#555;
+
+}
+
+.cancel-btn:hover{
+
+background:#666;
+
+}
+
+.modal-box {
+    background: #2b2c33;
+    padding: 25px;
+    border-radius: 15px;
+    width: 400px;
+    max-width: 90%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.modal-box h3 {
+    margin-bottom: 5px;
+    font-size: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.modal-box label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: #343541;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.modal-box label:hover {
+    background: #40414f;
+}
+
+.modal-box input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #10a37f;
+    cursor: pointer;
+}
+
+.modal-box button {
+    margin-top: 10px;
+    background: #10a37f;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modal-box button:hover {
+    background: #0d8d6d;
+}
+.remove-pdf-btn:hover {
+    color: #ef4444 !important;
+    transform: scale(1.1);
+    transition: 0.2s;
+}
+
+.close-modal-btn:hover {
+    color: #ffffff !important;
+    transition: 0.2s;
+}
+.modal-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.close-modal-btn{
+background:none;
+border:none;
+font-size:22px;
+cursor:pointer;
+color:white;
+}

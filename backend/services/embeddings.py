@@ -7,24 +7,16 @@ api_key = os.getenv("GOOGLE_API_KEY")
 client = genai.Client(api_key=api_key)
 
 def get_embedding(text: str):
-    try:
-        # Client direct embed_content method use karein
-        response = client.models.embed_content(
-            model="text-embedding-004",  # Agar ye tab bhi fail ho, toh below alternative try karein
-            contents=text,
-            config=types.EmbedContentConfig(
-                task_type="RETRIEVAL_DOCUMENT"
-            )
-        )
-        return response.embeddings[0].values
-    except Exception as e:
-        print(f"Embedding error: {e}")
-        # Secondary fallback if 'text-embedding-004' fails
+    # Try text-embedding-004 with exact prefix or fallback
+    for model_name in ["text-embedding-004", "models/text-embedding-004"]:
         try:
             response = client.models.embed_content(
-                model="gemini-embedding-2",
+                model=model_name,
                 contents=text
             )
             return response.embeddings[0].values
-        except Exception as fallback_err:
-            raise fallback_err
+        except Exception as err:
+            last_err = err
+            continue
+            
+    raise last_err

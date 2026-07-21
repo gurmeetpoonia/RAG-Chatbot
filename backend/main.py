@@ -11,23 +11,19 @@ from routers.chat import router as chat_router
 
 app = FastAPI()
 
-# 1. CORS Allow All (Production Safe for Testing)
-origins = ["*"]  # Saare domains se requests allow karega
-
+# Safe CORS Configuration for Render
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,  # <-- Change this to False when using "*"
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# 2. Database Tables Creation on Startup
 @app.on_event("startup")
 def startup_db_client():
     Base.metadata.create_all(bind=engine)
 
-# 3. Include Routers
 app.include_router(pdf_router)
 app.include_router(auth_router)
 app.include_router(conversation_router)

@@ -9,7 +9,7 @@ client = genai.Client(api_key=api_key)
 def get_embedding(text: str):
     try:
         response = client.models.embed_content(
-            model="text-embedding-004",
+            model="models/text-embedding-004",
             contents=text,
             config=types.EmbedContentConfig(
                 task_type="RETRIEVAL_DOCUMENT"

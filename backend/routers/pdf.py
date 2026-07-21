@@ -56,27 +56,21 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
             for page in pdf:
                 text += page.get_text()
 
+# pdf.py ke OCR section ko is tarah safe banayein:
             if len(text.strip()) == 0:
-
                 print("Scanned PDF detected. Running OCR...")
-
-                pdf = fitz.open(
-                    stream=pdf_bytes,
-                    filetype="pdf"
-                )
-
-                for page in pdf:
-
-                    pix = page.get_pixmap(dpi=300)
-
-                    img = Image.open(
-                        io.BytesIO(
-                            pix.tobytes("png")
-                        )
+                try:
+                    pdf = fitz.open(stream=pdf_bytes, filetype="pdf")
+                    for page in pdf:
+                        pix = page.get_pixmap(dpi=300)
+                        img = Image.open(io.BytesIO(pix.tobytes("png")))
+                        text += pytesseract.image_to_string(img)
+                except Exception as ocr_err:
+                    print(f"OCR Error (Tesseract binary missing): {ocr_err}")
+                    raise HTTPException(
+                        status_code=400,
+                        detail="Scanned image PDFs are not supported on cloud server without OCR binary. Please upload text-based PDFs."
                     )
-
-                    text += pytesseract.image_to_string(img)
-
         # ==========================
         # TXT
         # ==========================

@@ -1,7 +1,7 @@
 import {Navigate } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
-
+const API ="https://rag-chatbot-waz7.onrender.com";
 function ProtectedRoute({children}){
     const[loading,setLoading]=useState(true);
     const [isValid,setIsValid]=useState(false);
@@ -13,7 +13,7 @@ function ProtectedRoute({children}){
                 return;
             }
             try{
-                await axios.get("http://127.0.0.1:8000/me",
+                await axios.get(`${API}/me`,
                     {
                         headers:{
                             Authorization: `Bearer ${token}`

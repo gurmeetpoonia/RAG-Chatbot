@@ -3,7 +3,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from auth import get_current_user
 from schemas import QuestionRequest
-from services.vector_store import model, collection
+from services.vector_store import collection
+from services.embeddings import get_embedding
 from models import User, Chat, Conversation, ConversationPDF
 from gemini import ask_gemini, generate_chat_title
 from Dependencies import get_db
@@ -26,9 +27,9 @@ async def ask_question(request: QuestionRequest, current_user: User = Depends(ge
             conversation.title = request.question[:40]
         db.commit()
         db.refresh(conversation)    
-
+    
     question = request.question
-    question_embedding = model.encode(question)
+    question_embedding = get_embedding(question)
     
     conversation_pdfs = db.query(ConversationPDF).filter(
         ConversationPDF.conversation_id == conversation.id
@@ -39,7 +40,7 @@ async def ask_question(request: QuestionRequest, current_user: User = Depends(ge
         raise HTTPException(status_code=404, detail="No PDF attached to this conversation")
 
     results = collection.query(
-        query_embeddings=[question_embedding.tolist()],
+        query_embeddings=[question_embedding],
         n_results=5,
         where={
             "$and": [

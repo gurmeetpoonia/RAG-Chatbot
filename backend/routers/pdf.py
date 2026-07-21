@@ -13,12 +13,15 @@ from auth import get_current_user
 from models import PDF, User
 import fitz
 import io
-import pytesseract
+import pytesseract,platform
 from PIL import Image
 from docx import Document
+import platform
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-from services.vector_store import model, collection
+if platform.system() == "Windows":
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+from services.vector_store import collection
+from services.embeddings import get_embedding
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from Dependencies import get_db
 router = APIRouter(prefix="", tags=["PDF"])
@@ -125,8 +128,7 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
             status_code=400, 
             detail="No readable text found inside document."
         )
-
-    embeddings = model.encode(chunks)
+    embeddings = [get_embedding(chunk) for chunk in chunks]
     
     # Save to SQL Database
     new_pdf = PDF(filename=file.filename,file_hash=file_hash, user_id=current_user.id, chroma_collection="pdf_data")
@@ -138,7 +140,7 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
     try:
         collection.add(
             documents=chunks,
-            embeddings=embeddings.tolist(),
+            embeddings=embeddings,
             ids=[str(uuid.uuid4()) for _ in chunks],
             metadatas=[
                 {

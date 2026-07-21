@@ -39,8 +39,11 @@ function Login() {
         }
         try {
             const response = await axios.post(`${API}/login`, { email, password });
+            console.log(response.data);
             const token = response.data.access_token;
+            console.log("TOKEN =", token);
             localStorage.setItem("token", token);
+            console.log(localStorage.getItem("token"));
             toast.success("Login Successful");
             navigate("/chat");
         } catch (error) {

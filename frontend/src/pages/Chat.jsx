@@ -7,7 +7,7 @@ import Sidebar from "../components/Sidebar";
 import { ArrowUp ,Plus} from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import "../styles/Chat.css";
+import "../styles/chat.css";
 import "../styles/Sidebar.css";
 import "../styles/modal.css";
 import "../styles/Empty.css";

@@ -77,27 +77,27 @@ function Sidebar({
                         </div>
 
                         <div className="conversation-pdfs">
-    {chat.pdfs?.map(pdf => (
-        <div key={pdf.id} className="attached-pdf" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span>📎 {pdf.filename}</span>
-            {/* PDF Remove Button */}
-            <button 
-                className="remove-pdf-btn"
-                title="Remove PDF from chat"
-                onClick={(e) => {
-                    e.stopPropagation(); // Chat open hone se rokne ke liye
-                    if (window.confirm(`Remove ${pdf.filename} from this chat?`)) {
-                        // Yahan Chat.jsx se mila hua handleRemovePDF function call hoga
-                        handleRemovePDF(chat.id, pdf.id); 
-                    }
-                }}
-                style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '2px' }}
-            >
-                ✕
-            </button>
-        </div>
-    ))}
-</div>
+                            {chat.pdfs?.map(pdf => (
+                                <div key={pdf.id} className="attached-pdf" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span>📎 {pdf.filename}</span>
+                                    {/* PDF Remove Button */}
+                                    <button 
+                                        className="remove-pdf-btn"
+                                        title="Remove PDF from chat"
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Chat open hone se rokne ke liye
+                                            if (window.confirm(`Remove ${pdf.filename} from this chat?`)) {
+                                                // Yahan Chat.jsx se mila hua handleRemovePDF function call hoga
+                                                handleRemovePDF(chat.id, pdf.id); 
+                                            }
+                                        }}
+                                        style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '2px' }}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
                         {openMenu === chat.id && (
                             <div className="history-menu" onClick={(e) => e.stopPropagation()}>
                                 <button onClick={() => renameConversation(chat)}>
@@ -124,10 +124,10 @@ function Sidebar({
             </button>
             </div>
             <div
-        className="resize-bar"
-        onMouseDown={startResize}
-    />
-        </div>
+                className="resize-bar"
+                onMouseDown={startResize}
+            />
+            </div>
     );
 }
 

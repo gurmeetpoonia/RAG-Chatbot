@@ -7,7 +7,7 @@ load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-def get_embedding(text: str):
+def get_embedding(text: str, task_type: str = "RETRIEVAL_DOCUMENT"):
     response = client.models.embed_content(
         model="text-embedding-004",
         contents=text,

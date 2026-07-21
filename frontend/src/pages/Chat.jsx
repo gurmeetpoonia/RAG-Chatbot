@@ -11,7 +11,7 @@ import "../styles/Chat.css";
 import "../styles/Sidebar.css";
 import "../styles/modal.css";
 import "../styles/Empty.css";
-
+const API ="https://rag-chatbot-waz7.onrender.com";
 
 function Chat() {
     const [pdfs, setPdfs] = useState([]);
@@ -93,7 +93,7 @@ function Chat() {
 
     async function fetchPDFs() {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/my-pdfs", {
+            const response = await axios.get(`${API}/my-pdfs`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setPdfs(response.data);
@@ -105,7 +105,7 @@ function Chat() {
 
     async function fetchChats() {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/history", {
+            const response = await axios.get(`${API}/history`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setChats(response.data);
@@ -136,7 +136,7 @@ function Chat() {
 
         try {
             const response = await axios.post(
-                "http://127.0.0.1:8000/conversation/create",
+                `${API}/conversation/create`,
                 {},
                 {
                     headers: { Authorization: `Bearer ${token}` }
@@ -171,7 +171,7 @@ function Chat() {
     try {
 
         const response = await axios.get(
-            `http://127.0.0.1:8000/conversation/${conversation.id}/messages`,
+            `${API}/conversation/${conversation.id}/messages`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -218,7 +218,7 @@ function Chat() {
 
         try {
             await axios.put(
-                `http://127.0.0.1:8000/conversation/${conversation.id}/rename`,
+                `${API}/conversation/${conversation.id}/rename`,
                 { title: value },
                 {
                     headers: { Authorization: `Bearer ${token}` }
@@ -241,7 +241,7 @@ function Chat() {
         if (!result.isConfirmed) return;
 
         try {
-            await axios.delete(`http://127.0.0.1:8000/conversation/${id}`, {
+            await axios.delete(`${API}/conversation/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -275,7 +275,7 @@ function Chat() {
         if (!conversation) {
 
             const res = await axios.post(
-                "http://127.0.0.1:8000/conversation/create",
+                `${API}/conversation/create`,
                 {},
                 {
                     headers: {
@@ -294,7 +294,7 @@ function Chat() {
 
         // Upload PDF
         const response = await axios.post(
-            "http://127.0.0.1:8000/upload",
+            `${API}/upload`,
             formData,
             {
                 headers: {
@@ -306,7 +306,7 @@ function Chat() {
 
         // Conversation me attach karo
         await axios.post(
-            "http://127.0.0.1:8000/conversation/add-pdf",
+            `${API}/conversation/add-pdf`,
             {
                 conversation_id: conversation.id,
                 pdf_ids: [response.data.pdf_id]
@@ -374,7 +374,7 @@ function Chat() {
         if (!result.isConfirmed) return;
 
         try {
-            await axios.delete(`http://127.0.0.1:8000/pdf/${id}`, {
+            await axios.delete(`${API}/pdf/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -399,7 +399,7 @@ function Chat() {
     try {
 
         await axios.post(
-            "http://127.0.0.1:8000/conversation/remove-pdf",
+            `${API}/conversation/remove-pdf`,
             {
                 conversation_id: conversationId,
                 pdf_id: pdfId
@@ -476,7 +476,7 @@ function Chat() {
 
         try {
             const response = await axios.post(
-                "http://127.0.0.1:8000/ask",
+               `${API}/ask`,
                 {
                     question: userQuestion,
                     conversation_id: selectedConversation.id

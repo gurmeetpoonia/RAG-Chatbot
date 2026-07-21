@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../styles/Auth.css";
+const API ="https://rag-chatbot-waz7.onrender.com";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,7 +15,7 @@ function Login() {
             const token= localStorage.getItem("token");
             if(!token) return;
             try{
-                await axios.get("http://127.0.0.1:8000/me", 
+                await axios.get(`${API}/me`, 
                     {
                         headers: {
                             Authorization : `Bearer ${token}`
@@ -37,7 +38,7 @@ function Login() {
             return;
         }
         try {
-            const response = await axios.post("http://127.0.0.1:8000/login", { email, password });
+            const response = await axios.post(`${API}/login`, { email, password });
             const token = response.data.access_token;
             localStorage.setItem("token", token);
             toast.success("Login Successful");

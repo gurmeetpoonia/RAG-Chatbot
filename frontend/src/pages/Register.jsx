@@ -2,8 +2,9 @@ import { useState ,useEffect} from "react";
 import axios from "axios";
 import { useNavigate,Link} from "react-router-dom";
 import toast from "react-hot-toast";
-
 import "../styles/Auth.css";
+const API ="https://rag-chatbot-waz7.onrender.com";
+
 function Register(){
     const [username,setUsername]= useState("");
     const[email,setEmail]=useState("");
@@ -20,7 +21,7 @@ function Register(){
     async function handleRegister() {
         try {
             const response = await axios.post(
-                "http://127.0.0.1:8000/register",
+                `${API}/register`,
                 {
                     username,
                     email,

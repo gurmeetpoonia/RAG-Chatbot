@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../styles/Auth.css";
-const API ="https://rag-chatbot-0ul0.onrender.com";
+const API ="https://rag-chatbot-n0iw.onrender.com";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

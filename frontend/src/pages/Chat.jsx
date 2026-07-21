@@ -11,7 +11,7 @@ import "../styles/Chat.css";
 import "../styles/Sidebar.css";
 import "../styles/modal.css";
 import "../styles/Empty.css";
-const API ="https://rag-chatbot-0ul0.onrender.com";
+const API ="https://rag-chatbot-n0iw.onrender.com";
 
 function Chat() {
     const [pdfs, setPdfs] = useState([]);

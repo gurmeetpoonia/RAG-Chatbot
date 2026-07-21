@@ -1,7 +1,7 @@
 import {Navigate } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
-const API ="https://rag-chatbot-0ul0.onrender.com";
+const API ="https://rag-chatbot-n0iw.onrender.com";
 function ProtectedRoute({children}){
     const[loading,setLoading]=useState(true);
     const [isValid,setIsValid]=useState(false);

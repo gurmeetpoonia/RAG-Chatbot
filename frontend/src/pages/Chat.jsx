@@ -10,7 +10,7 @@ import remarkGfm from "remark-gfm";
 import "../styles/chat.css";
 import "../styles/Sidebar.css";
 import "../styles/modal.css";
-import "../styles/Empty.css";
+import "../styles/empty.css";
 const API ="https://rag-chatbot-n0iw.onrender.com";
 
 function Chat() {

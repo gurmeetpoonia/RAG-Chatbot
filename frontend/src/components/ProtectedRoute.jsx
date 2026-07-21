@@ -8,7 +8,6 @@ function ProtectedRoute({children}){
     useEffect(() => {
         async function verifyToken(){
             const token= localStorage.getItem("token");
-            console.log("LOCAL TOKEN =", token);
             if (!token){
                 setLoading(false);
                 return;

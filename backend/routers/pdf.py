@@ -67,6 +67,7 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
                             )
                         )
                         text += pytesseract.image_to_string(img)
+                        print(text)
                 except Exception as ocr_error:
                     print(f"OCR Error: {ocr_error}")
                     raise HTTPException(
@@ -117,6 +118,10 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
         )
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+    print("=" * 80)
+    print("Extracted Text:")
+    print(text)
+    print("=" * 80)
     chunks = splitter.split_text(text)
 
     if not chunks or len(text.strip()) == 0:
@@ -151,7 +156,7 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
         db.delete(new_pdf)
         db.commit()
         raise HTTPException(status_code=500, detail=f"Vector DB entry failed: {str(e)}")
-
+    print(collection.count())
     return {"filename": file.filename, "pdf_id": new_pdf.id,
              "message": "Uploaded successfully"}
 

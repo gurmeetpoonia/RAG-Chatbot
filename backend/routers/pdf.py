@@ -54,13 +54,13 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
             # Normal text extract karein
             for page in pdf:
                 text += page.get_text()
-
+            print(text)    
             # Agar text fir bhi empty ho (Scanned Image PDF)
             if len(text.strip()) == 0:
                 print("Scanned PDF detected. Trying OCR...")
                 try:
                     for page in pdf:
-                        pix = page.get_pixmap(dpi=300)
+                        pix = page.get_pixmap(dpi=150)  # 300 se ghatakar 150 kar do
                         img = Image.open(
                             io.BytesIO(
                                 pix.tobytes("png")
@@ -118,10 +118,6 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
         )
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
-    print("=" * 80)
-    print("Extracted Text:")
-    print(text)
-    print("=" * 80)
     chunks = splitter.split_text(text)
 
     if not chunks or len(text.strip()) == 0:

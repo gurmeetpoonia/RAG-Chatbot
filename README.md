@@ -41,7 +41,7 @@ An AI-powered Retrieval-Augmented Generation (RAG) Chatbot built using **FastAPI
 - pytesseract
 
 ### Database
-- SQLite
+- PostgreSQL (Neon)
 - ChromaDB (Vector Database)
 
 ---
@@ -75,7 +75,7 @@ RAG-Chatbot/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/RAG-Chatbot.git
+git clone https://github.com/gurmeetpoonia/RAG-Chatbot.git
 cd RAG-Chatbot
 ```
 
@@ -121,6 +121,10 @@ SECRET_KEY=YOUR_SECRET_KEY
 ALGORITHM=HS256
 
 ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+CHROMA_API_KEY=YOUR_CHROMA_API_KEY
+CHROMA_TENANT=YOUR_CHROMA_TENANT
+CHROMA_DATABASE=YOUR_CHROMA_DATABASE
 ```
 
 ---
@@ -141,11 +145,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 ### Frontend
 
-https://YOUR_FRONTEND_URL
+https://rag-chatbot-1-7bbn.onrender.com
 
 ### Backend API
 
-https://YOUR_BACKEND_URL
+https://rag-chatbot-n0iw.onrender.com
 
 ---
 
@@ -157,9 +161,9 @@ B.Tech Artificial Intelligence
 
 Vaish College of Engineering, Rohtak
 
-GitHub: https://github.com/YOUR_USERNAME
+GitHub: https://github.com/gurmeetpoonia
 
-LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN
+LinkedIn: https://www.linkedin.com/in/gurmeet-punia-7846a5318
 
 ---
 

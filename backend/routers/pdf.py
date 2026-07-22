@@ -39,7 +39,6 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
 ).first()
     if existing_pdf:
         return {"filename": existing_pdf.filename, "pdf_id": existing_pdf.id, "message": "File already exists in your library"}
-
     try:
 
         # ==========================
@@ -50,7 +49,6 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
                 stream=pdf_bytes,
                 filetype="pdf"
             )
-
             # Normal text extract karein
             for page in pdf:
                 text += page.get_text()
@@ -149,12 +147,10 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
             ]
 
         )
-        print(collection.count())
     except Exception as e:
         db.delete(new_pdf)
         db.commit()
         raise HTTPException(status_code=500, detail=f"Vector DB entry failed: {str(e)}")
-    print(collection.count())
     return {"filename": file.filename, "pdf_id": new_pdf.id,
              "message": "Uploaded successfully"}
 

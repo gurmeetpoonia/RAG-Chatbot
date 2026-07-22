@@ -147,7 +147,9 @@ async def upload_pdf(file: UploadFile = File(...), current_user: User = Depends(
                 }
                 for _ in chunks
             ]
+
         )
+        print(collection.count())
     except Exception as e:
         db.delete(new_pdf)
         db.commit()

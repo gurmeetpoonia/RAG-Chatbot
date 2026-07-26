@@ -244,7 +244,7 @@ function Chat() {
         });
 
         if (!result.isConfirmed) return;
-        setDeletingId(Id);
+        setDeletingId(id);
         try {
             await axios.delete(`${API}/conversation/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }

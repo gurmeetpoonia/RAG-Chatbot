@@ -14,6 +14,7 @@ function Sidebar({
     fileInputRef,
     renameConversation,
     deleteConversation,
+    deletingId,
     openConversation,
     logout,
     handleFileSelect,
@@ -129,8 +130,20 @@ function Sidebar({
                                     )}
                                 </button>
 
-                                <button onClick={() => deleteConversation(chat.id)}>
-                                    <Trash2 size={16} /> Delete
+                                <button
+                                    onClick={() => deleteConversation(chat.id)}
+                                    disabled={deletingId === chat.id}
+                                >
+                                    {deletingId === chat.id ? (
+                                        <>
+                                            <span className="spinner"></span>
+                                            Deleting...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Trash2 size={16} /> Delete
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         )}

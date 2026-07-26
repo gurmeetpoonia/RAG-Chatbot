@@ -11,6 +11,7 @@ import "../styles/chat.css";
 import "../styles/Sidebar.css";
 import "../styles/modal.css";
 import "../styles/empty.css";
+import { FiTerminal } from "react-icons/fi";
 const API ="https://rag-chatbot-n0iw.onrender.com";
 
 function Chat() {
@@ -26,6 +27,7 @@ function Chat() {
     const [selectedConversation, setSelectedConversation] = useState(null);
     const [conversationPDFs, setConversationPDFs] = useState([]);
     const [newChatLoading, setNewChatLoading] = useState(false);
+    const [deletingId, setDeletingId] = useState(null);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const [sidebarWidth, setSidebarWidth] = useState(
@@ -242,7 +244,7 @@ function Chat() {
         });
 
         if (!result.isConfirmed) return;
-
+        setDeletingId(Id);
         try {
             await axios.delete(`${API}/conversation/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -256,6 +258,8 @@ function Chat() {
             fetchChats();
         } catch {
             toast.error("Delete Failed");
+        }finally{
+            setDeletingId(null);
         }
     }
     // ==============================
@@ -537,6 +541,7 @@ function Chat() {
                 openConversation={openConversation}
                 deleteConversation={deleteConversation}
                 renameConversation={renameConversation}
+                deletingId={deletingId}
                 deletePDF={deletePDF}
                 openHistory={openHistory}
                 logout={logout}

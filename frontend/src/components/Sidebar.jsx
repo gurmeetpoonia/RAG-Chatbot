@@ -9,6 +9,8 @@ function Sidebar({
     createConversation,
     selectedConversation,
     setSelectedConversation,
+    uploading,
+    fileInputRef,
     renameConversation,
     deleteConversation,
     openConversation,
@@ -18,8 +20,7 @@ function Sidebar({
 }) {
     const [isOpen, setIsOpen] = useState(true);
     const [openMenu, setOpenMenu] = useState(null);
-    const fileInputRef = useRef(null);
-
+    
     useEffect(() => {
         function closeMenu() { setOpenMenu(null); }
         window.addEventListener("click", closeMenu);
@@ -38,14 +39,6 @@ function Sidebar({
                 {isOpen && <h2 className="logo">RAG AI</h2>}
             </div>
 
-            {/* ONLY ONE GLOBAL FILE INPUT */}
-            <input
-                type="file"
-                accept=".pdf"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleFileSelect}
-            />
 
             <button
                 className="new-chat-btn"
@@ -104,9 +97,26 @@ function Sidebar({
                                     <Pencil size={16} /> Rename
                                 </button>
 
-                                {/* Option 1: Direct upload from PC */}
-                                <button onClick={() => { setOpenMenu(null); setSelectedConversation(chat); fileInputRef.current.click(); }}>
-                                    <Plus size={16} /> Upload from PC
+                                <button
+                                    disabled={uploading}
+                                    onClick={() => {
+                                        if (uploading) return;
+
+                                        setOpenMenu(null);
+                                        setSelectedConversation(chat);
+                                        fileInputRef.current.click();
+                                    }}
+                                >
+                                    {uploading ? (
+                                        <>
+                                            <span className="spinner"></span>
+                                            Uploading...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Plus size={16} /> Upload from PC
+                                        </>
+                                    )}
                                 </button>
 
                                 <button onClick={() => deleteConversation(chat.id)}>

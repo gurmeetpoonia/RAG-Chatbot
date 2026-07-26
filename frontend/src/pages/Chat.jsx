@@ -18,6 +18,7 @@ function Chat() {
     const [question, setQuestion] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [messages, setMessages] = useState([]);
+    const [uploading, setUploading] = useState(false);
 
     const chatEndRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -263,6 +264,7 @@ function Chat() {
     const selectedFile = e.target.files[0];
 
     if (!selectedFile) return;
+    setUploading(true);
 
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -357,6 +359,9 @@ function Chat() {
         toast.error(
             error.response?.data?.detail || "Upload Failed"
         );
+    }
+    finally{
+        setUploading(false);
     }
 }   
     async function deletePDF(id) {
@@ -524,6 +529,8 @@ function Chat() {
                 createConversation={createConversation}
                 selectedConversation={selectedConversation}
                 setSelectedConversation={setSelectedConversation}
+                uploading={uploading}
+                fileInputRef={fileInputRef}
                 openConversation={openConversation}
                 deleteConversation={deleteConversation}
                 renameConversation={renameConversation}
@@ -566,11 +573,20 @@ messages.length===0 && (
 
         <button
             className="upload-btn"
+            disabled={uploading}
             onClick={() => {
-                document.querySelector('input[type="file"]').click();
+                if (!uploading)
+                    fileInputRef.current.click();
             }}
         >
-            📄 Upload PDF
+            {uploading ? (
+                <>
+                    <span className="spinner"></span>
+                    Uploading...
+                </>
+            ) : (
+                <>📄 Upload PDF</>
+            )}
         </button>
 
     </div>
@@ -605,12 +621,22 @@ messages.length===0 && (
                     type="file"
                     ref={fileInputRef}
                     hidden
-                     accept=".pdf,.txt,.docx"
+                    accept=".pdf,.txt,.docx"
                     onChange={handleFileSelect}
                 />
                 <div className="chat-input">
-                    <div className="icon-btn attach-btn" onClick={() => fileInputRef.current.click()}>
-                        <Plus size={20} />
+                    <div
+                        className={`icon-btn attach-btn ${uploading ? "disabled" : ""}`}
+                        onClick={() => {
+                            if (!uploading)
+                                fileInputRef.current.click();
+                        }}
+                    >
+                        {uploading ? (
+                            <span className="spinner"></span>
+                        ) : (
+                            <Plus size={20} />
+                        )}
                     </div>
 
                     <textarea

@@ -10,6 +10,7 @@ function Register(){
     const[email,setEmail]=useState("");
     const [password,setPassword]=useState("");
     const [showPassword,setShowPassword]=useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate=useNavigate();
 
     useEffect(()=> {
@@ -19,6 +20,7 @@ function Register(){
         }
     } ,[]);
     async function handleRegister() {
+        setLoading(true);
         try {
             const response = await axios.post(
                 `${API}/register`,
@@ -46,6 +48,8 @@ function Register(){
             } else {
                 console.log("Message:", error.message);
             }
+        } finally{
+          setLoading(false);
         }
     }
             
@@ -97,9 +101,25 @@ onClick={()=>setShowPassword(!showPassword)}
 
 </div>
 
-      <button className="auth-btn"
-       onClick={handleRegister}>
-        Register
+      <button
+          className="auth-btn"
+          onClick={handleRegister}
+          disabled={loading}
+      >
+
+      {
+      loading ?
+      <>
+      <span className="spinner"></span>
+      Creating Account...
+      </>
+
+      :
+
+      "Register"
+
+      }
+
       </button>
 
       <p className="switch-text">

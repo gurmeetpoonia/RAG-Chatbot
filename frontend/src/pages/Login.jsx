@@ -8,6 +8,7 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,6 +38,7 @@ function Login() {
             toast.error("Plese fill all fields");
             return;
         }
+        setLoading(true);
         try {
             const response = await axios.post(`${API}/login`, { email, password });
             
@@ -47,6 +49,9 @@ function Login() {
         } catch (error) {
             const errorMsg = error.response?.data?.detail || "Login Failed";
             toast.error("Please Register First");
+        }
+        finally{
+            setLoading(false);
         }
     }
 
@@ -89,10 +94,19 @@ onClick={()=>setShowPassword(!showPassword)}
 
 </div>
 
-      <button className="auth-btn"
-       onClick={handleLogin}>
-        Login
-      </button>
+      <button
+            className="auth-btn"
+            onClick={handleLogin}
+            disabled={loading}>
+            {loading ?
+            <>
+            <span className="spinner"></span>
+            Logging In...
+            </>
+            :
+            "Login"
+        }
+        </button>
 
       <p className="switch-text">
         Don't have an account?

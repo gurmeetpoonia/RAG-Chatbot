@@ -6,6 +6,7 @@ function Sidebar({
     startResize,
     pdfs,
     chats,
+    newChatLoading,
     createConversation,
     selectedConversation,
     setSelectedConversation,
@@ -42,10 +43,19 @@ function Sidebar({
 
             <button
                 className="new-chat-btn"
-                onClick={createConversation
-                }
+                onClick={createConversation}
+                disabled={newChatLoading}
             >
-                ➕ New Chat
+                {newChatLoading ? (
+                    <>
+                        <span className="spinner"></span>
+                        Creating...
+                    </>
+                ) : (
+                    <>
+                        ➕ New Chat
+                    </>
+                )}
             </button>
 
             <div className="conversation-list">

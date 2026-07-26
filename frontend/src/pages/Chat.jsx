@@ -25,7 +25,7 @@ function Chat() {
     const [chats, setChats] = useState([]);
     const [selectedConversation, setSelectedConversation] = useState(null);
     const [conversationPDFs, setConversationPDFs] = useState([]);
-    
+    const [newChatLoading, setNewChatLoading] = useState(false);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const [sidebarWidth, setSidebarWidth] = useState(
@@ -134,7 +134,7 @@ function Chat() {
     // ==============================
     async function createConversation() {
         
-
+        setNewChatLoading(true);
         try {
             const response = await axios.post(
                 `${API}/conversation/create`,
@@ -160,6 +160,8 @@ function Chat() {
         } catch (error) {
             if (handleUnauthorized(error)) return;
             toast.error(error.response?.data?.detail || "Unable to create chat");
+        } finally{
+            setNewChatLoading(false);
         }
     }
 
@@ -527,6 +529,7 @@ function Chat() {
                 pdfs={pdfs}
                 chats={chats}
                 createConversation={createConversation}
+                newChatLoading={newChatLoading}
                 selectedConversation={selectedConversation}
                 setSelectedConversation={setSelectedConversation}
                 uploading={uploading}

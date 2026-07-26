@@ -671,6 +671,23 @@ messages.length===0 && (
                    
                 </div>
             </div>
+            {
+            loading && (
+                <div className="loading-overlay">
+
+                    <div className="loading-box">
+
+                        <div className="loader"></div>
+
+                        <h3>Uploading Document</h3>
+
+                        <p>Please wait while we process your file...</p>
+
+                    </div>
+
+                </div>
+            )
+            }
         </div>
     );
 }
